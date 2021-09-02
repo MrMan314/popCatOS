@@ -1,7 +1,7 @@
 start: clean run
 run: output/floppy.img
 	qemu-system-i386 -L lib/pc-bios -fda $< -serial stdio
-objects/boot.bin:	boot/minimal.s
+objects/boot.bin:	boot/boot.s
 	nasm $< -fbin -o $@
 objects/entry.o:	boot/entry.s
 	nasm $< -felf -o $@
