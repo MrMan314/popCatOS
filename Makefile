@@ -1,6 +1,7 @@
 all: 					clean	run
 run:					output/floppy.img
-	qemu-system-i386 -L lib/pc-bios -fda $< -serial stdio
+	mkdir -p objects output
+	qemu-system-i386 -fda $< -serial stdio
 objects/boot.bin:		boot/boot.s
 	nasm $< -fbin -o $@
 objects/entry.elf:		boot/entry.s
@@ -15,4 +16,4 @@ output/floppy.img:		objects/os-image.bin
 	dd if=$< of=$@
 	qemu-img resize $@ 1440k
 clean:
-	rm -rf objects/os-image.bin objects/* output/*
+	rm -rf objects output
