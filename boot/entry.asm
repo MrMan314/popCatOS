@@ -1,4 +1,4 @@
 [BITS		32]
-[EXTERN		MAIN]
-CALL		MAIN
+[EXTERN		main]
+CALL		main
 JMP			$
