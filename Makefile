@@ -13,7 +13,7 @@ objects/os-image.bin:	objects/boot.bin objects/kernel.bin
 	cat $^ > $@
 output/floppy.img:		objects/os-image.bin
 	dd if=$< of=$@
-	qemu-img resize $@ 1440k
+	qemu-img resize -f raw $@ 1440k
 clean:
 	rm -rf objects/* output/*
 	mkdir -p objects output

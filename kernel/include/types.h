@@ -1,5 +1,5 @@
-#ifndef INCLUDE_TYPES_H
-#define INCLUDE_TYPES_H
+#ifndef POPCATOS_TYPES_H
+#define POPCATOS_TYPES_H
 #endif
 typedef char				int8;
 typedef short				int16;

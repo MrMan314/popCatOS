@@ -1,7 +1,7 @@
 #include <all.h>
 
 void main(){
-	write('A', 1, 1, 0b10101010);
-	write('a', 9, 1, 0b11);
-
+    drawRect(1, 1, 10, 10, 0xF);
+    write('A', 2, 2, 0x0);
+    while(true);
 }

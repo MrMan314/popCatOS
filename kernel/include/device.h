@@ -1,5 +1,5 @@
-#ifndef INCLUDE_DEVICE_H
-#define INCLUDE_DEVICE_H
+#ifndef POPCATOS_DEVICE_H
+#define POPCATOS_DEVICE_H
 #endif
 
 void reboot(){

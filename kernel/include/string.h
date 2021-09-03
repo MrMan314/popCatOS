@@ -1,5 +1,5 @@
-#ifndef INCLUDE_STRING_H
-#define INCLUDE_STRING_H
+#ifndef POPCATOS_STRING_H
+#define POPCATOS_STRING_H
 #endif
 
 // Gets the length of a string

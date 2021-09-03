@@ -1,5 +1,5 @@
-#ifndef INCLUDE_IO_H
-#define INCLUDE_IO_H
+#ifndef POPCATOS_IO_H
+#define POPCATOS_IO_H
 #endif
 void outb(const uint16 port, const unsigned char data){
 	asm volatile ( "outb %0, %1" : : "a"(data), "Nd"(port) );
