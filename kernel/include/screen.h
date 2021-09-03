@@ -157,9 +157,9 @@ void drawRect(uint16 x, uint16 y, uint16 w, uint16 h, uint8 color) {
 void fillScreen(uint8 color) {
     for (int x = 0; x < WIDTH; x++) {
         for (int y = 0; y < HEIGHT; y++) {
-            *(fb + WIDTH * y + x) = color;
+            *(bb + WIDTH * y + x) = color;
         }
-    }
+    }memcpy(fb, bb, FBSIZE);
 }
 
 void write(char c, uint16 x, uint16 y, uint8 color) {
