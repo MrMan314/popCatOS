@@ -1,0 +1,7 @@
+*.iml
+.idea
+objects/*
+output/*
+.old
+lib
+bin
