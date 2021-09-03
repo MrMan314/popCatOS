@@ -142,16 +142,24 @@ static uint8 font[][8] = {
 };
 
 void drawPixel(uint16 x, uint16 y, uint8 color) {
-    *(fb + 320 * y + x) = color;
+    *(fb + WIDTH * y + x) = color;
 }
 
 void drawRect(uint16 x, uint16 y, uint16 w, uint16 h, uint8 color) {
     for (int xx = x; xx < w + x; xx++) {
         for (int yy = y; yy < h + y; yy++) {
-            *(bb + 320 * yy + xx) = color;
+            *(bb + WIDTH * yy + xx) = color;
         }
     }
     memcpy(fb, bb, FBSIZE);
+}
+
+void fillScreen(uint8 color) {
+    for (int x = 0; x < WIDTH; x++) {
+        for (int y = 0; y < HEIGHT; y++) {
+            *(fb + WIDTH * y + x) = color;
+        }
+    }
 }
 
 void write(char c, uint16 x, uint16 y, uint8 color) {
