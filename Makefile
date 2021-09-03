@@ -1,4 +1,4 @@
-start: 					clean	run
+all: 					clean	run
 run:					output/floppy.img
 	qemu-system-i386 -L lib/pc-bios -fda $< -serial stdio
 objects/boot.bin:		boot/boot.s
