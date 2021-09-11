@@ -1,6 +1,8 @@
-CXX_SOURCES =	$(wildcard	kernel/*.cpp)
+RECURSIVE =		$(foreach d,$(wildcard $(1:=/*)),$(call RECURSIVE,$d,$2) $(filter $(subst *,%,$2),$d))
+
+CXX_SOURCES =	$(call RECURSIVE,kernel,*.cpp)
 CXX_OBJECTS =	objects/${CXX_SOURCES:.cpp=.o}
-ASM_SOURCES =	$(wildcard	boot/*.asm)
+ASM_SOURCES =	$(call RECURSIVE,boot,*.asm)
 ASM_OBJECTS =	objects/${ASM_SOURCES:.asm=.o}
 
 QEMU =			qemu-system-i386
@@ -18,7 +20,7 @@ ${ASM_OBJECTS}:			${ASM_SOURCES}
 	mkdir -p $(@D)
 	$(AS) $^ -fbin -o $@
 
-objects/entry.o:		kernel/entry.asm
+objects/kernel/entry.o:		kernel/entry.asm
 	mkdir -p $(@D)
 	$(AS) $^ -felf -o $@
 
@@ -26,7 +28,7 @@ ${CXX_OBJECTS}:			${CXX_SOURCES}
 	mkdir -p $(@D)
 	$(CC) $(CXX_FLAGS)
 
-objects/kernel.bin:		objects/entry.o	${CXX_OBJECTS}
+objects/kernel.bin:		objects/kernel/entry.o	${CXX_OBJECTS}
 	mkdir -p $(@D)
 	$(LD) -o $@ -T kernel/link.ld $^ --oformat binary
 
