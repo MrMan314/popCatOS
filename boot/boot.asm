@@ -29,13 +29,13 @@ MAIN:
 .rst:
 	MOV		AH,		0x00
 	INT		0x13
-	jc		.rst
+	JC		.rst
 	MOV		AH,		0x02
 	INT		0x13
-	JC		DISKLOOP
+	JC		.DISKERR
 	POP		CX
 	CMP		AL,		CL
-	JNE		DISKLOOP
+	JNE		.DISKERR
 	POP		DX
 	POP		CX
 	POP		BX
@@ -49,11 +49,11 @@ MAIN:
 	OR		AL,		1
 	MOV		CR0,	EAX
 	JMP		CODESEG:PMMAIN
-	HLT
-
-DISKLOOP:
 	CLI
 	HLT
+.DISKERR:
+    CLI
+    HLT
 
 GDTSTART:
 	DD		0x0000
@@ -111,6 +111,8 @@ PMMAIN:
 	JMP		$
 
 KO			EQU			0x1000
-BD:			DB				0x0
+BD:			DB			0x0
+DE:         DB          'DISK I/O ERROR!',       0x0
+SE:         DB          'DISK SECTORS ERROR!',   0x0
 TIMES		0x1FE-($-$$)DB	0x0
 DW			0xAA55
