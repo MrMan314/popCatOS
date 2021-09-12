@@ -40,9 +40,9 @@ MAIN:
 	POP		CX
 	POP		BX
 	POP		AX
-	MOV		AH,				0x00
-	MOV		AL,				0x13
-	INT		0x10
+;	MOV		AH,				0x00
+;	MOV		AL,				0x13
+;	INT		0x10
 	CLI
 	LGDT	[GDTDESC]
 	MOV		EAX,	CR0

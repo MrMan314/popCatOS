@@ -20,7 +20,7 @@ ${ASM_OBJECTS}:			${ASM_SOURCES}
 	mkdir -p $(@D)
 	$(AS) $^ -fbin -o $@
 
-objects/kernel/entry.o:		kernel/entry.asm
+objects/kernel/entry.o:	kernel/entry.asm
 	mkdir -p $(@D)
 	$(AS) $^ -felf -o $@
 
@@ -32,11 +32,11 @@ objects/kernel.bin:		objects/kernel/entry.o	${CXX_OBJECTS}
 	mkdir -p $(@D)
 	$(LD) -o $@ -T kernel/link.ld $^ --oformat binary
 
-objects/os-image.bin:	${ASM_OBJECTS}	objects/kernel.bin
+objects/os-image.bin:	${ASM_OBJECTS}			objects/kernel.bin
 	mkdir -p $(@D)
 	cat $^ > $@
 
-floppy.img:		objects/os-image.bin
+floppy.img:				objects/os-image.bin
 	mkdir -p $(@D)
 	dd if=$< of=$@
 	qemu-img resize -f raw $@ 1440k
