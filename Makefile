@@ -11,19 +11,21 @@ AS =			nasm
 CC =			$(ARCH)-elf-g++
 LD =			$(ARCH)-elf-ld
 
-CXX_FLAGS =		-ffreestanding -c $< -o $@ -I kernel/include -Wall -Wextra -Werror
-QEMU_FLAGS =	-drive file=$<,index=0,media=disk,format=raw -serial stdio
-
+CXX_FLAGS =		-ffreestanding -c $< -o $@ -I kernel/include -Wall -Wextra -Werror -v
+QEMU_FLAGS =	-drive file=$<,index=0,media=disk,format=raw -D stdio
+LD_FLAGS =		-o $@ -T kernel/link.ld $^ --oformat binary -v
+AS_BIN_FLAGS = 	$^ -fbin -o $@ -L+
+AS_ELF_FLAGS =	$^ -felf -o $@ -L+
 run:					floppy.img
 	$(QEMU) $(QEMU_FLAGS)
 
 ${ASM_OBJECTS}:			${ASM_SOURCES}
 	mkdir -p $(@D)
-	$(AS) $^ -fbin -o $@
+	$(AS) $(AS_BIN_FLAGS)
 
 objects/kernel/entry.o:	kernel/entry.asm
 	mkdir -p $(@D)
-	$(AS) $^ -felf -o $@
+	$(AS) $(AS_ELF_FLAGS)
 
 ${CXX_OBJECTS}:			${CXX_SOURCES}
 	mkdir -p $(@D)
@@ -31,7 +33,7 @@ ${CXX_OBJECTS}:			${CXX_SOURCES}
 
 objects/kernel.bin:		objects/kernel/entry.o	${CXX_OBJECTS}
 	mkdir -p $(@D)
-	$(LD) -o $@ -T kernel/link.ld $^ --oformat binary
+	$(LD) $(LD_FLAGS)
 
 objects/os-image.bin:	${ASM_OBJECTS}			objects/kernel.bin
 	mkdir -p $(@D)
