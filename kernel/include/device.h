@@ -3,5 +3,6 @@
 #endif
 
 void reboot(){
+    asm("cli");
 	asm("hlt");
 }

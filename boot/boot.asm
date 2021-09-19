@@ -40,9 +40,6 @@ MAIN:
 	POP		CX
 	POP		BX
 	POP		AX
-;	MOV		AH,				0x00
-;	MOV		AL,				0x13
-;	INT		0x10
 	CLI
 	LGDT	[GDTDESC]
 	MOV		EAX,	CR0
@@ -110,9 +107,7 @@ PMMAIN:
 	JMP		0x8:	KO
 	JMP		$
 
-KO			EQU			0x1000
-BD:			DB			0x0
-DE:         DB          'DISK I/O ERROR!',       0x0
-SE:         DB          'DISK SECTORS ERROR!',   0x0
+KO			EQU			    0x1000
+BD:			DB		    	0x0
 TIMES		0x1FE-($-$$)DB	0x0
 DW			0xAA55

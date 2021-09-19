@@ -24,7 +24,7 @@ void main(){
             println("pop", default_color);
         }else if(!strcmp(s, "shutdown")){
             println("Shutting Down...", default_color);
-            break;
+            reboot();
         }else if(!strcmp(s, "clear")){
             fill(0x0, default_color);
             move_cursor(0);

@@ -11,7 +11,7 @@ CC =			i686-elf-g++
 LD =			i686-elf-ld
 
 CXX_FLAGS =		-ffreestanding -c $< -o $@ -I kernel/include -Wall -Wextra -Werror
-QEMU_FLAGS =	-drive file=$<,index=0,media=disk,format=raw -serial stdio
+QEMU_FLAGS =	-drive file=$<,index=0,media=disk,format=raw -serial stdio -s -S
 
 run:					floppy.img
 	$(QEMU) $(QEMU_FLAGS)
