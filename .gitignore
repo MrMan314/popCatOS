@@ -1,7 +1,4 @@
 *.iml
 .idea
 objects/*
-.old
-lib
-bin
 floppy.img

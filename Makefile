@@ -5,10 +5,11 @@ CXX_OBJECTS =	objects/${CXX_SOURCES:.cpp=.o}
 ASM_SOURCES =	$(call RECURSIVE,boot,*.asm)
 ASM_OBJECTS =	objects/${ASM_SOURCES:.asm=.o}
 
-QEMU =			qemu-system-i386
+ARCH =			i686
+QEMU =			qemu-system-x86_64
 AS =			nasm
-CC =			i686-elf-g++
-LD =			i686-elf-ld
+CC =			$(ARCH)-elf-g++
+LD =			$(ARCH)-elf-ld
 
 CXX_FLAGS =		-ffreestanding -c $< -o $@ -I kernel/include -Wall -Wextra -Werror
 QEMU_FLAGS =	-drive file=$<,index=0,media=disk,format=raw -serial stdio

@@ -1,8 +1,8 @@
 ENTRY(main)
 SECTIONS {
-    . = 4K;
-    .text   BLOCK(4K):  ALIGN(4K){*(.text)            }
-    .rodata BLOCK(4K):  ALIGN(4K){*(.rodata)          }
-    .data   BLOCK(4K):  ALIGN(4K){*(.data)            }
-    .bss    BLOCK(4K):  ALIGN(4K){*(.COMMON)*(.bss)   }
+    . = 0x1000;
+    .text   BLOCK(0x1000):  ALIGN(0x1000){*(.text)            }
+    .rodata BLOCK(0x1000):  ALIGN(0x1000){*(.rodata)          }
+    .data   BLOCK(0x1000):  ALIGN(0x1000){*(.data)            }
+    .bss    BLOCK(0x1000):  ALIGN(0x1000){*(.COMMON)*(.bss)   }
 }

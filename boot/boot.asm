@@ -26,10 +26,10 @@ MAIN:
 	PUSH	CX
 	PUSH	DX
 	PUSH	AX
-.rst:
+.RST:
 	MOV		AH,		0x00
 	INT		0x13
-	JC		.rst
+	JC		.RST
 	MOV		AH,		0x02
 	INT		0x13
 	JC		.DISKERR
