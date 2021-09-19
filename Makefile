@@ -11,11 +11,12 @@ AS =			nasm
 CC =			$(ARCH)-elf-g++
 LD =			$(ARCH)-elf-ld
 
-CXX_FLAGS =		-ffreestanding -c $< -o $@ -I kernel/include -Wall -Wextra -Werror -v
-QEMU_FLAGS =	-drive file=$<,index=0,media=disk,format=raw -D stdio
-LD_FLAGS =		-o $@ -T kernel/link.ld $^ --oformat binary -v
+QEMU_FLAGS =	-drive file=$<,index=0,media=disk,format=raw -serial stdio
 AS_BIN_FLAGS = 	$^ -fbin -o $@ -L+
 AS_ELF_FLAGS =	$^ -felf -o $@ -L+
+CXX_FLAGS =		-ffreestanding -c $< -o $@ -I kernel/include -Wall -Wextra -Werror -v
+LD_FLAGS =		-o $@ -T kernel/link.ld ${CXX_OBJECTS} -v
+
 run:					floppy.img
 	$(QEMU) $(QEMU_FLAGS)
 

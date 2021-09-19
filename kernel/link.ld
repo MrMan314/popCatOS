@@ -1,3 +1,5 @@
+OUTPUT_FORMAT(binary)
+STARTUP(objects/kernel/entry.o)
 ENTRY(main)
 SECTIONS {
     . = 0x1000;
