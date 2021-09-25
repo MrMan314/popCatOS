@@ -1,2 +1,2 @@
-EXTERN		main
-CALL		main
+EXTERN  main
+CALL	main

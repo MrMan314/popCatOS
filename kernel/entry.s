@@ -1,0 +1,2 @@
+.EXTERN main
+CALL    main
