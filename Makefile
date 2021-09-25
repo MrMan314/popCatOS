@@ -10,24 +10,23 @@ CC =			$(ARCH)-elf-g++
 LD =			$(ARCH)-elf-ld
 
 QEMU_FLAGS =	-drive file=$<,index=0,media=disk,format=raw -serial stdio
-AS_BIN_FLAGS = 	$^ -o $@
-AS_ELF_FLAGS =	$^ -o $@
+AS_FLAGS =		$^ -o $@ -v
 CXX_FLAGS =		-ffreestanding -c $< -o $@ -I kernel/include -Wall -Wextra -Werror -v
 LD_FLAGS =		-o $@ -T kernel/link.ld ${CXX_OBJECTS} -v
-LD_AS_FLAGS =	-o $@ $^ -Ttext 0x7C00 --oformat=binary
+LD_AS_FLAGS =	-o $@ $^ -Ttext 0x7C00 --oformat=binary -v
 
-run:					floppy.img
+run:						floppy.img
 	$(QEMU) $(QEMU_FLAGS)
 
-objects/boot/boot.o:		boot/boot.s
+objects/boot/boot.elf:		boot/boot.s
 	mkdir -p $(@D)
-	$(AS) $(AS_BIN_FLAGS)
-objects/boot/boot.bin:		objects/boot/boot.o
+	$(AS) $(AS_FLAGS)
+objects/boot/boot.bin:		objects/boot/boot.elf
 	$(LD) $(LD_AS_FLAGS)
 
 objects/kernel/entry.elf:	kernel/entry.s
 	mkdir -p $(@D)
-	$(AS) $(AS_ELF_FLAGS)
+	$(AS) $(AS_FLAGS)
 
 ${CXX_OBJECTS}:				${CXX_SOURCES}
 	mkdir -p $(@D)
