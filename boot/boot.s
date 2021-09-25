@@ -57,8 +57,7 @@ GDTSTART:
     .LONG   0x0000
 
 GDTCODE:
-    .WORD   0xFFFF
-    .WORD   0x0000
+    .LONG   0xFFFF
     .BYTE   0x0000
     .BYTE   0x009A
     .BYTE   0x00CF
