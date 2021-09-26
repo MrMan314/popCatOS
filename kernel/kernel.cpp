@@ -3,7 +3,7 @@
 #define default_color 0x0F
 #define error_color 0x04
 
-void main(){
+int main(){
     fill(0x0, default_color);
     move_cursor(0);
     fill_range(0x0, 1, 1, 31, 3, 0x1F);
@@ -34,4 +34,5 @@ void main(){
             println("\" not found", error_color);
         }
     }
+    return 0;
 }
