@@ -18,7 +18,7 @@ LD_AS_FLAGS =	-o $@ $^ -Ttext 0x7C00 --oformat=binary -v
 run:						floppy.img
 	$(QEMU) $(QEMU_FLAGS)
 
-objects/boot/boot.elf:		boot/boot.asm
+objects/boot/boot.elf:		boot/boot.s
 	mkdir -p $(@D)
 	$(AS) $(AS_FLAGS)
 
@@ -37,14 +37,11 @@ objects/kernel.bin:			objects/kernel/entry.elf	${CXX_OBJECTS}
 	mkdir -p $(@D)
 	$(LD) $(LD_FLAGS)
 
-objects/os-image.bin:		objects/boot/boot.bin		objects/kernel.bin
+floppy.img:					objects/boot/boot.bin		objects/kernel.bin
 	mkdir -p $(@D)
-	cat $^ > $@
-
-floppy.img:					objects/os-image.bin
-	mkdir -p $(@D)
-	dd if=$< of=$@
-	qemu-img resize -f raw $@ 1440k
+	dd if=/dev/zero				of=$@					bs=1024			count=1440
+	dd if=objects/boot/boot.bin	of=$@	conv=notrunc	bs=512	seek=0	count=1
+	dd if=objects/kernel.bin	of=$@	conv=notrunc	bs=512	seek=1
 
 clean:
 	rm -rf objects floppy.img
