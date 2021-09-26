@@ -14,6 +14,8 @@ _start:
     LJMP    $0x0,       $MAIN
 
 MAIN:
+    MOV     $STARTMSG,  %SI
+    CALL    PRINT
     MOVB    %DL,        BD
     MOVW    $0x1000,    %BX
     MOVB    $0x32,      %AL
@@ -47,10 +49,13 @@ MAIN:
     MOVL    %EAX,       %CR0
     LJMP    $CODESEG,   $PMMAIN
     CLI
-    HLT
+    JMP     .HANG
 .DISKERR:
+    MOV     $DISKMSG,   %SI
+    CALL    PRINT
     CLI
-    HLT
+.HANG:
+    JMP     .HANG
 
 GDTSTART:
     .LONG   0x0000
@@ -80,6 +85,19 @@ GDTDESC:
 .EQU    CODESEG,    GDTCODE - GDTSTART
 .EQU    DATASEG,    GDTDATA - GDTSTART
 
+PRINT: PUSHA
+PRINTSTART:
+    XORB    %BH,    %BH
+    MOVB    $0x0E,  %AH
+    LODSB
+    CMPB    $0x00,  %AL
+    JE      PRINTDONE
+    INT     $0x10
+    JMP     PRINTSTART
+PRINTDONE:
+    POPA
+    RET
+
 .CODE32
 PMMAIN:
     PUSHAL
@@ -105,6 +123,8 @@ PMMAIN:
     JMPL    $0x8,       $0x1000
     JMP     .CONT
 
-BD:     .WORD   0x0000
+BD:         .WORD   0x0000
+DISKMSG:    .ASCIZ  "DISK I/O ERROR\r\n"
+STARTMSG:   .ASCIZ  "popCatOS Bootloader\r\n"
 .FILL   0x1FE-(.-_start), 0x01, 0x00
 .WORD   0xAA55

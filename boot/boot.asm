@@ -14,7 +14,9 @@ BEGIN:
 	JMP 	0x0:MAIN
 
 MAIN:
-	MOV		[BD],	DL
+    MOV     SI,     STARTMSG
+    CALL    PRINT
+	;MOV		[BD],	DL
 	MOV		BX,		0x1000
 	MOV		AL,		0x32
 	MOV		DL,		[BD]
@@ -47,10 +49,13 @@ MAIN:
 	MOV		CR0,	EAX
 	JMP		CODESEG:PMMAIN
 	CLI
-	HLT
+	JMP     .HANG
 .DISKERR:
+    MOV     SI,     DISKMSG
+    CALL    PRINT
     CLI
-    HLT
+.HANG:
+    JMP     .HANG
 
 GDTSTART:
 	DD		0x0000
@@ -80,6 +85,19 @@ GDTDESC:
 CODESEG	EQU	GDTCODE-GDTSTART
 DATASEG	EQU	GDTDATA-GDTSTART
 
+PRINT: PUSHA
+PRINTSTART:
+    XOR     BH,     BH
+    MOV     AH,     0x0E
+    LODSB
+    CMP     AL,     0x00
+    JE      PRINTDONE
+    INT     0x10
+    JMP     PRINTSTART
+PRINTDONE:
+    POPA
+    RET
+
 BITS	32
 PMMAIN:
 	PUSHAD
@@ -106,5 +124,7 @@ PMMAIN:
 	JMP		$
 
 BD:			DB		    	0x0
+DISKMSG:    DB              "DISK I/O ERROR",       0x0D,   0x0A,   0
+STARTMSG:   DB              "popCatOS Bootloader",  0x0D,   0x0A,   0
 TIMES		0x1FE-($-$$)DB	0x0
 DW			0xAA55

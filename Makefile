@@ -18,9 +18,10 @@ LD_AS_FLAGS =	-o $@ $^ -Ttext 0x7C00 --oformat=binary -v
 run:						floppy.img
 	$(QEMU) $(QEMU_FLAGS)
 
-objects/boot/boot.elf:		boot/boot.s
+objects/boot/boot.elf:		boot/boot.asm
 	mkdir -p $(@D)
 	$(AS) $(AS_FLAGS)
+
 objects/boot/boot.bin:		objects/boot/boot.elf
 	$(LD) $(LD_AS_FLAGS)
 
