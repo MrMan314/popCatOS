@@ -1,5 +1,5 @@
 OUTPUT_FORMAT(binary)
-STARTUP(objects/kernel/entry.elf)
+STARTUP(bin/kernel/entry.elf)
 ENTRY(main)
 SECTIONS {
     . = 0x1000;
