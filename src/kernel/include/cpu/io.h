@@ -2,6 +2,10 @@
 #define POPCATOS_IO_H
 #endif
 
+//#define outb(port, data) asm volatile ( "outb %0, %1" : : "a"(data), "Nd"(port));
+//#define outw(port, data) asm volatile ( "outw %0, %1" : : "a"(data), "Nd"(port));
+//#define outl(port, data) asm volatile ( "outl %0, %1" : : "a"(data), "Nd"(port));
+
 static inline void outb(const uint16 port, const uint8 data) {
     asm volatile ( "outb %0, %1" : : "a"(data), "Nd"(port));
 }

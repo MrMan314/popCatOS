@@ -1,0 +1,25 @@
+typedef unsigned short uint16;
+extern void clear();
+extern void move_cursor(const uint16 pos);
+extern void print(const char *s, const char color);
+extern void fill(const char c, const char color);
+
+void handler(int code) {
+    switch(code){
+        case 0:
+            clear();
+            move_cursor(0);
+            print("OK", 0x0F);
+            break;
+        case 0x7FFFFFFF:
+            fill(0x00, 0x4F);
+            move_cursor(0);
+            print("ERROR 0x7FFFFFFF - DEATH", 0x4F);
+            break;
+        case (int)0x80000000:
+            fill(0x00, 0x4F);
+            move_cursor(0);
+            print("ERROR 0x80000000 - DIED OF DEATH", 0x4F);
+            break;
+    }
+}

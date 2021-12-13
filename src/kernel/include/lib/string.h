@@ -43,7 +43,7 @@ char* inttostr(int n) {
 }
 
 // Compares strings (0 means equal, anything else means differ)
-int strcmp(const char* a, const char*b){
+bool strcmp(const char* a, const char*b){
 	while((*a==*b)&&*a){
 		++a;
 		++b;

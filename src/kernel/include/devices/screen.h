@@ -1,5 +1,5 @@
-#ifndef POPCATOS_TEXT_H
-#define POPCATOS_TEXT_H
+#ifndef POPCATOS_SCREEN_H
+#define POPCATOS_SCREEN_H
 #endif
 
 // Define screen dimensions
@@ -8,7 +8,7 @@
 #define SCREEN_DEPTH 2
 
 // Display Frame Buffer
-volatile char*fb = (char *) 0x000B8000;
+volatile char*fb = (char *) 0xB8000;
 
 // Cursor position
 uint32 cx = 0, cy = 0, cpos=0;
@@ -104,31 +104,28 @@ void putch(const char c, const char color) {
     }
 }
 
-// Reads input (max length 4096)
+// Reads input
 
-/*
- * NEEDS REVAMPING!!!
- */
-
-char* readln(char s[4096], const uint8 color){
-    uint32 i=0;
-    while(true) {
-        if(inb(0x64)&0x1) {
+char* readln(const uint8 color) {
+    uint32 i = 0;
+    char *s = {};
+    while (true) {
+        if (inb(0x64) & 0x1) {
             char c = inb(0x60);
-            if(kbd_US[(uint32)c] == '\n'){
+            if (kbd_US[(uint32) c] == '\n') {
+                s[i] = 0;
                 endl();
                 return s;
-            }else if(kbd_US[(uint32)c] == '\b' && i != 0){
-                move_cursor(cpos-1);
+            } else if (kbd_US[(uint32) c] == '\b') {
+                if (i == 0) continue;
+                move_cursor(cpos - 1);
                 putch(0x0, color);
-                move_cursor(cpos-1);
+                move_cursor(cpos - 1);
                 i--;
-                s[i]=0;
-            }else if(kbd_US[(uint32)c] == '\b' && i == 0){
-                continue;
-            }else if(kbd_US[(uint32)c]){
-                putch(kbd_US[(uint32)c], color);
-                s[i]=kbd_US[(uint32)c];
+                s[i] = 0;
+            } else if (kbd_US[(uint32) c]) {
+                putch(kbd_US[(uint32) c], color);
+                s[i] = kbd_US[(uint32) c];
                 i++;
             }
         }
@@ -153,14 +150,15 @@ void print(const char *s, const char color){
 }
 
 // Prints to the frame buffer at current position with a newline
-void println(const char *s, const char color){
-    uint32 i=0;
-    while(s[i]!=0){
-        if(s[i]=='\n')endl();
-        else{
-            write_cell((cpos)*SCREEN_DEPTH, s[i], color);
-            move_cursor(cpos+1);
+void println(const char *s, const char color) {
+    uint32 i = 0;
+    while (s[i] != 0) {
+        if (s[i] == '\n')endl();
+        else {
+            write_cell((cpos) * SCREEN_DEPTH, s[i], color);
+            move_cursor(cpos + 1);
         }
         i++;
-    }endl();
+    }
+    endl();
 }
