@@ -4,7 +4,7 @@ extern void move_cursor(const uint16 pos);
 extern void print(const char *s, const char color);
 extern void fill(const char c, const char color);
 
-void handler(int code) {
+extern "C" void handler(int code) {
     switch(code){
         case 0:
             clear();

@@ -1,7 +1,7 @@
 .EXTERN main
-.EXTERN _Z7handleri
+.EXTERN handler
 CALL    main
 PUSH    %EAX
-CALL    _Z7handleri
+CALL    handler
 CLI
 HLT
