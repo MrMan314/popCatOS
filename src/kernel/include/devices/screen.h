@@ -112,7 +112,8 @@ char* readln(const uint8 color) {
     while (true) {
         if (inb(0x64) & 0x1) {
             char c = inb(0x60);
-            if (kbd_US[(uint32) c] == '\n') {
+            if (c < 0) continue;
+            else if (kbd_US[(uint32) c] == '\n') {
                 s[i] = 0;
                 endl();
                 return s;

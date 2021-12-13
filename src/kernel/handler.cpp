@@ -21,5 +21,10 @@ void handler(int code) {
             move_cursor(0);
             print("ERROR 0x80000000 - DIED OF DEATH", 0x4F);
             break;
+        default:
+            fill(0x00, 0x4F);
+            move_cursor(0);
+            print("IDK WHAT HAPPENED", 0x4F);
+            break;
     }
 }

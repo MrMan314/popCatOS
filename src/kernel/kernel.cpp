@@ -31,6 +31,8 @@ int main() {
             move_cursor(0);
         } else if (!strcmp(s, "die")) {
             return 0x7FFFFFFF;
+        } else if (!strcmp(s, "unknowndeath")) {
+            return 0x12345678;
         } else if (!strcmp(s, "dieofdeathplsdontdothisplsplsplsplspls")) {
             return (int)0x80000000;
         } else {
