@@ -27,7 +27,8 @@ AS							= $(ARCH)-elf-as
 CC							= $(ARCH)-elf-g++
 LD							= $(ARCH)-elf-ld
 
-QEMU_FLAGS					= -drive file=$<,index=0,media=disk,format=raw -serial stdio -s -S
+QEMU_FLAGS					= -drive file=$<,index=0,media=disk,format=raw -serial stdio
+DBUG_FLAGS					= $(QEMU_FLAGS) -s -S
 
 BOOTSECT					= bin/boot/boot.bin
 KERNEL						= bin/kernel/kernel.bin
@@ -35,6 +36,9 @@ DISKIMG						= floppy.img
 
 all:						$(DISKIMG)
 	$(QEMU) $(QEMU_FLAGS)
+
+debug:						$(DISKIMG)
+	$(QEMU) $(DBUG_FLAGS)
 
 $(GAS_KRNL_OBJ):			$(GAS_KRNL_SRC)
 	mkdir -p $(@D)
