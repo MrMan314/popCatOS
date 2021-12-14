@@ -10,7 +10,7 @@ int main() {
     move_cursor(0);
     fill_range(0x0, 1, 1, 31, 3, 0x1F);
     move_cursor(xytopos(3, 2));
-    print("Welcome to popcatOS v0.0.6!", 0x1F);
+    print("Welcome to popcatOS v0.0.7!", 0x1F);
     move_cursor(xytopos(0, 5));
     while (true) {
         print(" >", default_color);
@@ -20,7 +20,7 @@ int main() {
         } else if (!strcmp(s, "bongus")) {
             println("bingus", default_color);
         } else if (!strcmp(s, "ver")) {
-            println("0.0.6", default_color);
+            println("0.0.7", default_color);
         } else if (!strcmp(s, "pop")) {
             println("pop", default_color);
         } else if (!strcmp(s, "shutdown")) {
