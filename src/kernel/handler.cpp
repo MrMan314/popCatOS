@@ -16,10 +16,10 @@ extern "C" void handler(int code) {
             move_cursor(0);
             print("ERROR 0x7FFFFFFF - DEATH", 0x4F);
             break;
-        case (int)0x80000000:
+        case 0x7FFFFFFE:
             fill(0x00, 0x4F);
             move_cursor(0);
-            print("ERROR 0x80000000 - DIED OF DEATH", 0x4F);
+            print("ERROR 0x7FFFFFFE - DIED OF DEATH", 0x4F);
             break;
         default:
             fill(0x00, 0x4F);

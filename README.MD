@@ -3,6 +3,8 @@ Revamped with custom bootloader
 
 OS Developed by MrMan314
 
+(fine it's not an os **(yet)**, it's just a kernel, but still)
+
 **changelog imported from https://replit.com/@mrman314/popCatOS#README.md**
 
 # popCatOS

@@ -29,6 +29,8 @@ MAIN:
     PUSH    %DX
     PUSH    %AX
 .RST:
+    MOV     $DISKRST,   %SI
+    CALL    PRINT
     MOVB    $0x00,      %AH
     INT     $0x13
     JC      .RST
@@ -51,7 +53,7 @@ MAIN:
     CLI
     JMP     .HANG
 .DISKERR:
-    MOV     $DISKMSG,   %SI
+    MOV     $DISKERR,   %SI
     CALL    PRINT
     CLI
 .HANG:
@@ -124,7 +126,8 @@ PMMAIN:
     JMP     .CONT
 
 BD:         .WORD   0x0000
-DISKMSG:    .ASCIZ  "DISK I/O ERROR\r\n"
+DISKERR:    .ASCIZ  "DISK I/O ERROR\r\n"
+DISKRST:    .ASCIZ  "Resetting Disk...\r\n"
 STARTMSG:   .ASCIZ  "popCatOS Bootloader\r\n"
 .FILL   0x1FE-(.-_start), 0x01, 0x00
 .WORD   0xAA55

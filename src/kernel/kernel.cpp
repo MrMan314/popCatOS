@@ -34,7 +34,7 @@ int main() {
         } else if (!strcmp(s, "unknowndeath")) {
             return 0x12345678;
         } else if (!strcmp(s, "dieofdeathplsdontdothisplsplsplsplspls")) {
-            return (int)0x80000000;
+            return 0x7FFFFFFE;
         } else {
             print("Error: Command \"", error_color);
             print(s, error_color);
